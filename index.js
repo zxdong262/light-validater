@@ -11,6 +11,7 @@ module.exports = function(targetObj, rules) {
 	var res = {
 		errCount: 0
 		,errs: []
+		,errFields: []
 		,result: {}
 	}
 	_.each(rules, function(value, key) {
@@ -38,6 +39,7 @@ module.exports = function(targetObj, rules) {
 		if(pass) res.result[key] = rule.valueFilter?opt.valueFilter.call(value):value
 		else {
 			res.errCount ++
+			res.errFields.push(key)
 			res.errs.push(
 				(!result.minLen?rule.minLenMsg:'') ||
 				(!result.maxLen?rule.maxLenMsg:'') ||

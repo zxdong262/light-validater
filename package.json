@@ -1,6 +1,6 @@
 {
 	"name": "light-validater"
-	,"version": "0.0.1"
+	,"version": "0.0.2"
 	,"description": "a validate lib for nodejs."
 	,"main": "index.js"
 	,"scripts": {

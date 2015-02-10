@@ -20,7 +20,7 @@ describe('validater', function() {
 			,n2: 345435
 		}
 		var res = validater(tar, rules)
-		assert(res.errCount === 1 && res.result.n2 === 345435)
+		assert(res.errCount === 1 && res.result.n2 === 345435 && res.errFields[0] === 'n1')
 	})
 
 	it('validate custom function', function() {

@@ -45,19 +45,24 @@ var targetObject = {
 
 var validateResult = validater(targetObject, rules)
 
-/*
-validateResult =
+
+assert(validateResult ==
 {
-    errCount: 0
-    ,errs: []
-    ,result: {
+    errCount: 0 //error count
+    ,errs: []   //error array
+    ,errFields: [] //error field array
+    ,result: {  //result
         n1: 's4dssdf'
         ,n2: 'fff'
     }
-}
-*/
+})
+
 
 ```
+
+## changelog
+
+- 0.0.2 add errFields to result
 
 ## test
 
