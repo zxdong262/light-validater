@@ -1,0 +1,35 @@
+{
+	"name": "light-validater"
+	,"version": "0.0.1"
+	,"description": "a validate lib for nodejs."
+	,"main": "index.js"
+	,"scripts": {
+		"test": "mocha --reporter spec"
+	}
+	,"repository": {
+		"type": "git"
+		,"url": "https://github.com/zxdong262/light-validater.git"
+	}
+	,"keywords": [
+		"validate"
+	]
+	,"author": {
+		"name": "ZHAO Xudong"
+		,"email": "zxdong@gmail.com"
+		,"url": "http://html5beta.com"
+	}
+	,"scripts": {
+		"start": "node app.js"
+	}
+	,"dependencies": {
+		"lodash": "*"
+	}
+	,"devDependencies": {
+		"mocha": "^2.0.0"
+	}
+	,"license": "MIT"
+	,"bugs": {
+		"url": "https://github.com/zxdong262/light-validater/issues"
+	}
+	,"homepage": "https://github.com/zxdong262/light-validater"
+}
