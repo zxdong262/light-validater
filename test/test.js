@@ -1,7 +1,7 @@
 
 var assert = require('assert')
 var validater = require('..')
-
+,_ = require('lodash')
 
 describe('validater', function() {
 	it('validate regxp', function() {
@@ -78,6 +78,107 @@ describe('validater', function() {
 		}
 		var res = validater(tar, rules)
 		assert(res.errCount === 3 && res.result.n21 === 34543 && res.result.n11 === 's4')
+	})
+
+	it('with optional key-value undefined', function() {
+		var ru = {
+			minLen: 2
+			,maxLen: 8
+			,reg: /^[0-9a-zA-Z]{1,20}$/
+			,custom: function() {
+				return /[0-9]/.test(this.value) && /[a-zA-Z]/.test(this.value)
+			}
+			,errMsg: 'min len = 2, max len = 8, only digit or English charactor, must have at least one digit and one English character'
+			,regMsg: 'only digit or English character'
+			,minLenMsg: 'min len = 2'
+			,maxLenMsg: 'max len = 8'
+			,customMsg: 'must have at least one digit and one English character'
+		}
+		var rules = {
+			n1: _.extend({}, ru, { optional: true })
+			,n2: ru
+			,n3: ru
+			,n4: ru
+			,n5: ru
+			,n6: ru
+		}
+		var tar = {
+			n2: 3454357678678
+			,n3: 's4dssdf'
+			,n4: 34543
+			,n5: 'as3242343234234234'
+			,n6: 'as324_'
+		}
+		var res = validater(tar, rules)
+		assert(res.errCount === 4 && res.result.n3 === 's4dssdf')
+	})
+
+	it('with optional key-value defined', function() {
+		var ru = {
+			minLen: 2
+			,maxLen: 8
+			,reg: /^[0-9a-zA-Z]{1,20}$/
+			,custom: function() {
+				return /[0-9]/.test(this.value) && /[a-zA-Z]/.test(this.value)
+			}
+			,errMsg: 'min len = 2, max len = 8, only digit or English charactor, must have at least one digit and one English character'
+			,regMsg: 'only digit or English character'
+			,minLenMsg: 'min len = 2'
+			,maxLenMsg: 'max len = 8'
+			,customMsg: 'must have at least one digit and one English character'
+		}
+		var rules = {
+			n1: _.extend({}, ru, { optional: true })
+			,n2: ru
+			,n3: ru
+			,n4: ru
+			,n5: ru
+			,n6: ru
+		}
+		var tar = {
+			n1: 's'
+			,n2: 3454357678678
+			,n3: 's4dssdf'
+			,n4: 34543
+			,n5: 'as3242343234234234'
+			,n6: 'as324_'
+		}
+		var res = validater(tar, rules)
+		assert(res.errCount === 5 && res.result.n3 === 's4dssdf')
+	})
+
+	it('with ignored key-value defined', function() {
+		var ru = {
+			minLen: 2
+			,maxLen: 8
+			,reg: /^[0-9a-zA-Z]{1,20}$/
+			,custom: function() {
+				return /[0-9]/.test(this.value) && /[a-zA-Z]/.test(this.value)
+			}
+			,errMsg: 'min len = 2, max len = 8, only digit or English charactor, must have at least one digit and one English character'
+			,regMsg: 'only digit or English character'
+			,minLenMsg: 'min len = 2'
+			,maxLenMsg: 'max len = 8'
+			,customMsg: 'must have at least one digit and one English character'
+		}
+		var rules = {
+			n1: _.extend({}, ru, { ignore: true })
+			,n2: ru
+			,n3: ru
+			,n4: ru
+			,n5: ru
+			,n6: ru
+		}
+		var tar = {
+			n1: 's'
+			,n2: 3454357678678
+			,n3: 's4dssdf'
+			,n4: 34543
+			,n5: 'as3242343234234234'
+			,n6: 'as324_'
+		}
+		var res = validater(tar, rules)
+		assert(res.errCount === 4 && res.result.n3 === 's4dssdf')
 	})
 
 	it('validate combination', function() {

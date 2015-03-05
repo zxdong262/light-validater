@@ -31,6 +31,8 @@ var rules = {
         ,minLenMsg: 'min len = 2'
         ,maxLenMsg: 'max len = 8'
         ,customMsg: 'must have at least one digit and one English character'
+        //,optional: false //if true value can be empty
+        //,ignore: false //if true, will not be checked at all
     }
     ,n2: {
         errMsg: 'min len = 2'
@@ -62,6 +64,7 @@ assert(validateResult ==
 
 ## changelog
 
+- 0.1.0 fix optional and ignore bugs and add test
 - 0.0.2 add errFields to result
 
 ## test

@@ -5,7 +5,7 @@
 
 var _ = require('lodash')
 
-module.exports = function(targetObj, rules) {
+module.exports = function(targetObj, _rules) {
 
 	//returned obj
 	var res = {
@@ -14,17 +14,14 @@ module.exports = function(targetObj, rules) {
 		,errFields: []
 		,result: {}
 	}
-	_.each(rules, function(value, key) {
+	,rules = _rules
 
-		check(value, key, targetObj[key])
-
-	})
-
-	return res
-
-	function check(rule, key, value) {
-		rule = _.isPlainObject(rule)?rule:{}
-		var result = {
+	function check(_rule, _key, _value) {
+		var rule = _.isPlainObject(_rule)?_rule:{}
+		var value = _value
+		var key = _key
+		if(rule.ignore) return
+		var result = value? {
 			minLen: rule.minLen? (value.toString().length >= rule.minLen) : 'ignore'
 			,maxLen: rule.maxLen? (value.toString().length <= rule.maxLen) : 'ignore'
 			,custom: rule.custom? rule.custom.call({
@@ -33,11 +30,12 @@ module.exports = function(targetObj, rules) {
 				,value: value
 			}) : 'ignore'
 			,reg: rule.reg? rule.reg.test(value) : 'ignore'
-		}
-		,shouldCheck =  !rule.ignore && ((rule.optional && value) || !rule.optional) 
-		,pass = (result.minLen && result.maxLen && result.custom && result.reg) || !shouldCheck
-		if(pass) res.result[key] = rule.valueFilter?opt.valueFilter.call(value):value
-		else {
+		}: {}
+		,shouldCheck =  !rule.optional || (rule.optional && value)
+		,pass = result.minLen && result.maxLen && result.custom && result.reg
+
+		if(pass && shouldCheck) res.result[key] = rule.valueFilter?opt.valueFilter.call(value):value
+		else if(shouldCheck) {
 			res.errCount ++
 			res.errFields.push(key)
 			res.errs.push(
@@ -49,5 +47,15 @@ module.exports = function(targetObj, rules) {
 			)
 		}
 	}
+	
+	_.each(rules, function(value, key) {
+
+		check(value, key, targetObj[key])
+
+	})
+
+	return res
+
+
 }
 
