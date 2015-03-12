@@ -34,7 +34,7 @@ module.exports = function(targetObj, _rules) {
 		,shouldCheck =  !rule.optional || (rule.optional && value)
 		,pass = result.minLen && result.maxLen && result.custom && result.reg
 
-		if(pass && shouldCheck) res.result[key] = rule.valueFilter?opt.valueFilter.call(value):value
+		if(pass && shouldCheck) res.result[key] = rule.valueFilter?rule.valueFilter.call(null, value):value
 		else if(shouldCheck) {
 			res.errCount ++
 			res.errFields.push(key)

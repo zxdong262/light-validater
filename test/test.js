@@ -215,6 +215,23 @@ describe('validater', function() {
 		assert(res.errCount === 5 && res.result.n3 === 's4dssdf')
 	})
 
+	it('value filter', function() {
+		var ru = {
+			minLen: 2
+			,valueFilter: function(value) {
+				return '<' + value + '>'
+			}
+		}
+		var rules = {
+			n1: ru
+		}
+		var tar = {
+			n1: 's4dssdf'
+		}
+		var res = validater(tar, rules)
+		assert(res.errCount === 0 && res.result.n1 === '<s4dssdf>')
+	})
+
 	//end
 })
 
