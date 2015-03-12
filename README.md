@@ -64,6 +64,7 @@ assert(validateResult ==
 
 ## changelog
 
+- 0.1.1 fix valueFilter and add test[by davidnussio]
 - 0.1.0 fix optional and ignore bugs and add test
 - 0.0.2 add errFields to result
 
