@@ -21,7 +21,7 @@ module.exports = function(targetObj, _rules) {
 		var value = _value
 		var key = _key
 		if(rule.ignore) return
-		var result = value? {
+		var result = value !== undefined? {
 			minLen: rule.minLen? (value.toString().length >= rule.minLen) : 'ignore'
 			,maxLen: rule.maxLen? (value.toString().length <= rule.maxLen) : 'ignore'
 			,custom: rule.custom? rule.custom.call({
